@@ -40,19 +40,25 @@ const movies = [
   },
 ];
 
-const movieDocuments = movies.map(movie => new Movie(movie));
-mongoose
-    .connect() // todo Incluir entre paréntesis la url de la conexión con la base de datos de mongodb
-    .then(async() => {
+const exportSeed = async() => {
+    try {
+        await mongoose.connect("mongodb://localhost:27017/movies");
+        console.log("Connected to MongoDB");
+
         const allMovies = await Movie.find();
         if (allMovies.length) {
             await Movie.collection.drop();
+            console.log("Previous data deleted");
         }
-    })
-    .catch(error => console.log(`Error deleting data: ${error}`))
-    .then(async() => {
-        await Movie.insertMany(movieDocuments);
-        console.log("Database created");
-    })
-    .catch(error => console.log(`Error creating data: ${error}`))
-    .finally(() => mongoose.disconnect());
+
+        await Movie.insertMany(movies);
+        console.log("Database created")
+    } catch (error) {
+        console.log(`Error during the process: ${error}`);
+    } finally {
+        await mongoose.disconnect();
+        console.log("Disconnected from MongoDB");
+    }
+}
+
+exportSeed();
