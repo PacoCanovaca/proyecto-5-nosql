@@ -1,0 +1,24 @@
+{
+  "name": "proyecto-5-nosql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PacoCanovaca/proyecto-5-nosql.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PacoCanovaca/proyecto-5-nosql/issues"
+  },
+  "homepage": "https://github.com/PacoCanovaca/proyecto-5-nosql#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongoose": "^9.6.3"
+  }
+}
