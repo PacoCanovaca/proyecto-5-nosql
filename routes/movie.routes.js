@@ -52,7 +52,7 @@ router.get("/movies/year/:year", async(req, res) => {
     } catch (error) {
         return res.status(500).json(error);
     }
-})
+});
 
 router.get("/movies/genre/:genre", async(req, res) => {
     const {genre} = req.params;
@@ -66,6 +66,38 @@ router.get("/movies/genre/:genre", async(req, res) => {
     } catch (error) {
         return res.status(500).json(error);
     }
-})
+});
+
+router.post("/movies/create", async(req, res, next) => {
+    const newMovie = new Movie(req.body);
+    try {
+        const createdMovie = await newMovie.save();
+        return res.status(201).json(createdMovie);
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.delete("/movies/delete/:id", async(req, res, next) => {
+    try {
+        const id = req.params.id;
+        await Movie.findByIdAndDelete(id);
+        return res.status(200).json("Movie deleted");
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.put("/movies/edit/:id", async(req, res, next) => {
+    try{
+        const id = req.params.id;
+        const modifiedMovie = new Movie(req.body);
+        modifiedMovie._id = id;
+        const updatedMovie = await Movie.findByIdAndUpdate(id, modifiedMovie);
+        return res.status(200).json(updatedMovie);
+    } catch (error) {
+        next(error);
+    }
+});
 
 module.exports = router;
