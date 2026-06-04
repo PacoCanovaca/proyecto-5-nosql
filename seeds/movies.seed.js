@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Movie = require("../models/Movie");
+const dbConnection = require("../utils/db");
 
 const movies = [
   {
@@ -42,8 +43,7 @@ const movies = [
 
 const exportSeed = async() => {
     try {
-        await mongoose.connect("mongodb://localhost:27017/movies");
-        console.log("Connected to MongoDB");
+        dbConnection();
 
         const allMovies = await Movie.find();
         if (allMovies.length) {
